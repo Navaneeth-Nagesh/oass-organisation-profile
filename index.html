@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body>
+    <div class="overlay"></div>
     <section class="focus-view">
         <section class="organisation-header">
             <section class="org-box">
@@ -16,11 +17,25 @@
                 </figure>
                 <div class="details">
                     <div class="org-name">New NGO Organization</div>
-                    <div class="org-code">Organization Code: ORG001</div>
-                    <div class="org-category">Category: NGO</div>
+                    <div class="flex-input">
+                        <label for="org-code">Organization Code:</label>
+                        <input type="text" id="org-code" value="ORG001" class="org-profile-input" disabled>
+                    </div>
+                    <div class="flex-input">
+                        <select class="org-category org-profile-input" disabled>
+                            <option value="NGO" selected>Category: NGO</option>
+                            <option value="MIT">Category: MIT</option>
+                            <option value="ISC">Category: ISC</option>
+                        </select>
+                        <img src="static/images/down-arrow.svg" alt="">
+                    </div>
                 </div>
-                <div class="edit-icon">
+                <div class="edit-icon" onclick="edit_org_profile(event)">
                     <img src="static/images/edit.svg" alt="">
+                </div>
+                <div class="action-buttons">
+                    <button type="button" onclick="save_org_profile(event)">Done</button>
+                    <button type="button" onclick="cancel_org_profile(event)"><img src="static/images/cancel.svg" alt=""> Cancel</button>
                 </div>
             </section>
             <section class="org-box">
@@ -32,21 +47,41 @@
             <section class="org-details">
                 <div class="flex-box">
                     <div class="container">
+                        <div class="edit-icon" onclick="edit_org_details(event)">
+                            <img src="static/images/edit-grey.svg" alt="">
+                        </div>
+                        <div class="action-buttons">
+                            <button type="button" onclick="save_org_details(event)">Done</button>
+                            <button type="button" onclick="cancel_org_details(event)"><img src="static/images/cancel.svg" alt=""> Cancel</button>
+                        </div>
                         <div class="content">
                             <h6>Address:</h6>
-                            <address>
-                                No. 25 Ragavendra Nilaya, AECS Layout, Ashwanthanagar, Bengaluru, Karnataka, 560094, India.
-                            </address>
+                            <textarea name="address" class="org-detail-input" disabled>No. 25 Ragavendra Nilaya, AECS Layout, Ashwanthanagar, Bengaluru, Karnataka, 560094, India.</textarea>
                         </div>
                         <div class="content">
                             <h6>Location:</h6>
-                            <div class="detail">12.948 183.2344</div>
+                            <input type="text" value="12.948 183.2344" class="detail" class="org-detail-input" disabled/>
                         </div>
                         <div class="content">
                             <h6>Phone Number:</h6>
-                            <div class="detail">+91 88392 39892</div>
-                            <div class="detail">+91 80392 39492</div>
+                            <div class="detail">
+                                <select name="country-code" class="org-detail-input" disabled>
+                                    <option value="+91">+91 India</option>
+                                </select>
+                                <img src="static/images/down-arrow-grey.svg" class="down-arrow" alt=""> 
+                                <img src="static/images/inbox.svg" alt="" class="archieve">
+                                <input type="tel" value="+91 88392 39892" class="org-detail-input" disabled>
+                            </div>
+                            <div class="detail">
+                                <select name="country-code" class="org-detail-input" disabled>
+                                    <option value="+91">+91 India</option>
+                                </select> 
+                                <img src="static/images/down-arrow-grey.svg" class="down-arrow" alt=""> 
+                                <img src="static/images/inbox.svg" alt="" class="archieve">
+                                <input type="tel" value="+91 80392 39492" class="org-detail-input" disabled>
+                            </div>
                         </div>
+                        <button type="button" class="add-button" onclick="add_phone_input()"><img src="static/images/add.svg" alt=""> Add</button>
                     </div>
                     <div class="container">
                         <div class="content">
@@ -99,5 +134,63 @@
             </section>
         </div>
     </section>
+
+    <script>
+    
+        function edit_org_profile(event) {
+            document.querySelector('.overlay').classList.add('active');
+            event.currentTarget.parentElement.classList.add('edittable');
+            document.body.classList.add('non-scrollable');
+            document.querySelectorAll('.org-profile-input').forEach(input => {
+                input.removeAttribute('disabled');
+            });
+        }
+
+        function save_org_profile(event) {
+            document.querySelector('.overlay').classList.remove('active');
+            event.currentTarget.parentElement.parentElement.classList.remove('edittable');
+            document.body.classList.remove('non-scrollable');
+            document.querySelectorAll('.org-profile-input').forEach(input => {
+                input.setAttribute('disabled', '');
+            });
+        }
+
+        function cancel_org_profile(event) {
+            document.querySelector('.overlay').classList.remove('active');
+            event.currentTarget.parentElement.parentElement.classList.remove('edittable');
+            document.body.classList.remove('non-scrollable');
+            document.querySelectorAll('.org-profile-input').forEach(input => {
+                input.setAttribute('disabled', '');
+            });
+        }
+
+        function edit_org_details(event) {
+            document.querySelector('.overlay').classList.add('active');
+            event.currentTarget.parentElement.classList.add('edittable');
+            document.body.classList.add('non-scrollable');
+            document.querySelectorAll('.org-detail-input').forEach(input => {
+                input.removeAttribute('disabled');
+            });
+        }
+
+        function save_org_details(event) {
+            document.querySelector('.overlay').classList.remove('active');
+            event.currentTarget.parentElement.parentElement.classList.remove('edittable');
+            document.body.classList.remove('non-scrollable');
+            document.querySelectorAll('.org-detail-input').forEach(input => {
+                input.setAttribute('disabled', '');
+            });
+        }
+
+        function cancel_org_details(event) {
+            document.querySelector('.overlay').classList.remove('active');
+            event.currentTarget.parentElement.parentElement.classList.remove('edittable');
+            document.body.classList.remove('non-scrollable');
+            document.querySelectorAll('.org-detail-input').forEach(input => {
+                input.setAttribute('disabled', '');
+            });
+        }
+
+    </script>
 </body>
 </html>

@@ -11,6 +11,24 @@ a {
   color: inherit;
 }
 
+body.non-scrollable {
+  overflow: hidden;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+}
+.overlay.active {
+  display: block;
+}
+
 .focus-view {
   width: 95%;
   margin-left: auto;
@@ -27,6 +45,37 @@ a {
   width: 50%;
   display: flex;
   padding: 20px 0;
+}
+.organisation-header .org-box.edittable {
+  z-index: 2;
+}
+.organisation-header .org-box.edittable::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to top, #192750 0%, #324d9f 100%);
+}
+.organisation-header .org-box.edittable .action-buttons {
+  display: block;
+}
+.organisation-header .org-box.edittable .edit-icon {
+  display: none;
+}
+.organisation-header .org-box.edittable figure,
+.organisation-header .org-box.edittable .org-name {
+  z-index: 2;
+  position: relative;
+}
+.organisation-header .org-box.edittable .details .flex-input {
+  border-bottom: 1px solid #6681cf;
+  width: 100%;
+  padding-bottom: 2px;
+}
+.organisation-header .org-box.edittable .details .flex-input img {
+  display: block;
 }
 .organisation-header .org-box figure {
   width: 60px;
@@ -49,27 +98,61 @@ a {
   font-size: 14px;
   margin-bottom: 2px;
 }
-.organisation-header .org-box .details .org-code,
-.organisation-header .org-box .details .org-category {
+.organisation-header .org-box .details #org-code {
+  margin-left: 5px;
+}
+.organisation-header .org-box .details #org-code,
+.organisation-header .org-box .details .org-category,
+.organisation-header .org-box .details label {
   font-size: 12px;
   margin-top: 4px;
+  background-color: transparent;
+  color: #e6e7e9;
+  border: none;
+}
+.organisation-header .org-box .org-category {
+  width: 100%;
+}
+.organisation-header .org-box .flex-input {
+  display: flex;
+  position: relative;
+}
+.organisation-header .org-box .flex-input img {
+  width: 8px;
+  margin-right: 5px;
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: none;
+}
+.organisation-header .org-box .action-buttons {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  display: none;
+}
+.organisation-header .org-box .action-buttons button {
+  padding: 5px 25px;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+}
+.organisation-header .org-box .action-buttons button img {
+  width: 8px;
+  margin-right: 5px;
+}
+.organisation-header .org-box .action-buttons button:nth-of-type(1) {
+  background-color: #314d9e;
+}
+.organisation-header .org-box .action-buttons button:nth-of-type(2) {
+  background-color: #f769a7;
 }
 .organisation-header .org-box .edit-icon {
-  position: absolute;
-  right: 30px;
-  top: 20px;
-  border-radius: 50%;
-  overflow: hidden;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: #192750;
-}
-.organisation-header .org-box .edit-icon img {
-  width: 10px;
-  height: 10px;
 }
 .organisation-header .org-box:nth-of-type(1) {
   border-right: 1px solid #949599;
@@ -92,6 +175,11 @@ a {
   font-size: 14px;
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 .flex-container {
   display: flex;
   justify-content: space-between;
@@ -107,14 +195,22 @@ a {
   justify-content: space-between;
   align-items: stretch;
 }
-.org-details address {
+.org-details textarea[name=address] {
   font-style: normal;
   color: #595959;
   font-size: 12px;
   width: 80%;
+  resize: none;
+  background-color: transparent;
+  border: none;
 }
 .org-details h6 {
   margin-bottom: 10px;
+}
+.org-details select,
+.org-details input {
+  color: #595959;
+  border: none;
 }
 .org-details .content {
   margin-bottom: 20px;
@@ -125,14 +221,130 @@ a {
   margin-bottom: 10px;
 }
 
+.edit-icon {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.edit-icon img {
+  width: 10px;
+  height: 10px;
+}
+
 .container {
   width: calc(50% - 15px);
   background-color: white;
   border-radius: 5px;
   padding: 25px 0;
+  position: relative;
+}
+.container.edittable {
+  z-index: 2;
+}
+.container.edittable select,
+.container.edittable input,
+.container.edittable textarea {
+  border-bottom: 1px solid #949599;
+  width: 95%;
+  padding-bottom: 5px;
+}
+.container.edittable .detail select,
+.container.edittable .detail .archieve,
+.container.edittable .detail .down-arrow {
+  display: block;
+}
+.container.edittable .add-button {
+  display: block;
+  cursor: pointer;
+}
+.container.edittable .edit-icon {
+  display: none;
+}
+.container.edittable .action-buttons {
+  display: block;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.container.edittable .action-buttons button {
+  padding: 5px 25px;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+}
+.container.edittable .action-buttons button img {
+  width: 8px;
+  margin-right: 5px;
+}
+.container.edittable .action-buttons button:nth-of-type(1) {
+  background-color: #c8c9cb;
+}
+.container.edittable .action-buttons button:nth-of-type(2) {
+  background-color: #f769a7;
+}
+.container .add-button {
+  display: none;
+  margin-left: 5%;
+  background-color: #192750;
+  color: white;
+  border: none;
+  font-size: 12px;
+  padding: 6px 28px;
+  border-radius: 10px;
+}
+.container .add-button img {
+  width: 10px;
+}
+.container .action-buttons {
+  display: none;
+}
+.container .edit-icon {
+  background-color: #e6e7e9;
 }
 .container .content {
   margin-left: 25px;
+}
+.container .detail {
+  display: flex;
+  position: relative;
+}
+.container .detail select {
+  width: 100px;
+  margin-right: 20px;
+  display: none;
+}
+.container .detail .archieve {
+  position: absolute;
+  width: 15px;
+  right: 6%;
+  cursor: pointer;
+  display: none;
+}
+.container .detail .down-arrow {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  left: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: none;
+}
+.container .detail input {
+  width: 71.2%;
+}
+.container input {
+  background: transparent;
 }
 .container h6 {
   color: #595959;
@@ -209,7 +421,7 @@ a {
 .theme h5 {
   text-align: center;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 500;
 }
 .theme .flex-container {
   width: calc(100% - 70px);
