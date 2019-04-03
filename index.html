@@ -12,9 +12,10 @@
     <section class="focus-view">
         <section class="organisation-header">
             <section class="org-box">
-                <figure>
-                    <!-- <img src="" alt=""> -->
-                </figure>
+                <input type="file" id="org-profile-img" class="org-profile-input" disabled>
+                <label for="org-profile-img">
+                    <img src="" alt="" id="org-profile-image">
+                </label>
                 <div class="details">
                     <div class="org-name">New NGO Organization</div>
                     <div class="flex-input">
@@ -189,6 +190,28 @@
             document.querySelectorAll('.org-detail-input').forEach(input => {
                 input.setAttribute('disabled', '');
             });
+        }
+
+        const user_image_input = document.getElementById('org-profile-img');
+        var org_image = document.getElementById('org-profile-image');
+
+        user_image_input.addEventListener('change', upload_image);
+
+        function upload_image(e) {
+            readURL(this);
+        }
+
+        function readURL(input) {   
+
+            if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                org_image.src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+            }
         }
 
     </script>

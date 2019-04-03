@@ -46,6 +46,9 @@ body.non-scrollable {
   display: flex;
   padding: 20px 0;
 }
+.organisation-header .org-box input[type=file] {
+  display: none;
+}
 .organisation-header .org-box.edittable {
   z-index: 2;
 }
@@ -64,7 +67,10 @@ body.non-scrollable {
 .organisation-header .org-box.edittable .edit-icon {
   display: none;
 }
-.organisation-header .org-box.edittable figure,
+.organisation-header .org-box.edittable label[for=org-profile-img] {
+  cursor: pointer;
+}
+.organisation-header .org-box.edittable label[for=org-profile-img],
 .organisation-header .org-box.edittable .org-name {
   z-index: 2;
   position: relative;
@@ -77,7 +83,7 @@ body.non-scrollable {
 .organisation-header .org-box.edittable .details .flex-input img {
   display: block;
 }
-.organisation-header .org-box figure {
+.organisation-header .org-box label[for=org-profile-img] {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -85,7 +91,7 @@ body.non-scrollable {
   background-color: #e6e7e9;
   margin-left: 30px;
 }
-.organisation-header .org-box figure img {
+.organisation-header .org-box label[for=org-profile-img] img {
   width: 100%;
   height: 100%;
   object-fit: cover;
